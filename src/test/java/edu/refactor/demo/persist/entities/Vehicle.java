@@ -1,30 +1,41 @@
-package edu.refactor.demo;
+package edu.refactor.demo.persist.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class Vehicle implements Serializable {
-    public static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     @Column
-    public Long id;
+    private Long id;
+
     @Column
-    public String title;
+    private String title;
+
     @Column
-    public double price;
+    private double price; //todo Money
+
     @Column
-    public String status;
+    private String status; //todo Enum
+
     @Column
-    public String type;
+    private String type; //todo Enum
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<VehicleRental> rentals = new ArrayList<>();
+    private List<VehicleRental> rentals = new ArrayList<>();
+
     @Column
-    public String serialNumber;
+    private String serialNumber;
 }

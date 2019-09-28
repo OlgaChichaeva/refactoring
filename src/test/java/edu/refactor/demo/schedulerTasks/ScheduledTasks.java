@@ -1,4 +1,4 @@
-package edu.refactor.demo;
+package edu.refactor.demo.schedulerTasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

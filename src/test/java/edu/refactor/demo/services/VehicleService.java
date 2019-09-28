@@ -1,5 +1,6 @@
-package edu.refactor.demo;
+package edu.refactor.demo.services;
 
+import edu.refactor.demo.VehicleDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
