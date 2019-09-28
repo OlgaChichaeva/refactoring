@@ -18,8 +18,9 @@ public class BillingAccount implements Serializable {
     @Column
     private Long id;
 
-    @Column
-    private double money;// todo класс money
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MONEY_ID")
+    private Money money;// todo класс money
 
     @Column
     private boolean isPrimary; // todo что значит isPrimary
