@@ -1,4 +1,4 @@
-package edu.refactor.demo.services;
+package edu.refactor.demo.services.cashandconvertation;
 
 import edu.refactor.demo.persist.entities.Money;
 import edu.refactor.demo.projecttypes.Currency;
