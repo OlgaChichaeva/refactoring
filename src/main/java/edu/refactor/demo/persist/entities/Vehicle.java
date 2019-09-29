@@ -23,8 +23,9 @@ public class Vehicle implements Serializable {
     @Column
     private String title;
 
-    @Column
-    private double price; //todo Money
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRICE_ID")
+    private Money price; //todo Money
 
     @Column
     private String status; //todo Enum
