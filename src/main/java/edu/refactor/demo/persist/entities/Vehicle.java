@@ -1,6 +1,7 @@
 package edu.refactor.demo.persist.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.refactor.demo.projecttypes.VehicleStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +27,12 @@ public class Vehicle implements Serializable {
     @Column
     private double price; //todo Money
 
-    @Column
-    private String status; //todo Enum
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private VehicleStatus status; //todo Enum
 
     @Column
-    private String type; //todo Enum
+    private String type;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)

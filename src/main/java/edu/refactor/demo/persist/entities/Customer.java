@@ -1,6 +1,8 @@
 package edu.refactor.demo.persist.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.refactor.demo.projecttypes.CustomerCategory;
+import edu.refactor.demo.projecttypes.CustomerStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,15 +32,17 @@ public class Customer implements Serializable {
     @Column
     private Instant registration;
 
-    @Column
-    private String status; //todo Enum
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status; //todo Enum
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VehicleRental> rentals = new ArrayList<>();
 
-    @Column
-    private String category; //todo Enum or entity
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private CustomerCategory category; //todo Enum or entity
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
