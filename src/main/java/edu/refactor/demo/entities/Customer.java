@@ -1,10 +1,12 @@
-package edu.refactor.demo.persist.entities;
+package edu.refactor.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,15 +23,21 @@ public class Customer implements Serializable {
     @Column
     private Long id;
 
+    @NotNull
+    @Size(min = 2, max = 20)
     @Column
     private String login;
 
+    @NotNull
+    @Size(min = 2, max = 20)
     @Column
     private String email;
 
+    @NotNull
     @Column
     private Instant registration;
 
+    @NotNull
     @Column
     private String status; //todo Enum
 
@@ -42,5 +50,5 @@ public class Customer implements Serializable {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<BillingAccount> billingAccounts;
+    private List<BillingAccount> billingAccounts;
 }

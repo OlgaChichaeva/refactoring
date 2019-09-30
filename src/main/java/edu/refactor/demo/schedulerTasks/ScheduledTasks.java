@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Component
 public class ScheduledTasks {
-    private final VehicleRentalDAO vehicleRentalDao;
+/*    private final VehicleRentalDAO vehicleRentalDao;
 
     @Autowired
     public ScheduledTasks(VehicleRentalDAO vehicleRentalDao) {
@@ -35,5 +35,5 @@ public class ScheduledTasks {
             }
             vehicleRentalDao.saveAll(vrs);
         }
-    }
+    }*/
 }

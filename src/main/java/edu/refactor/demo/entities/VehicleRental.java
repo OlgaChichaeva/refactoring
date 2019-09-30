@@ -1,9 +1,11 @@
-package edu.refactor.demo.persist.entities;
+package edu.refactor.demo.entities;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -16,22 +18,25 @@ public class VehicleRental implements Serializable {
     @Id
     @GeneratedValue
     @Column
-    public Long id;
+    private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
-    public Vehicle vehicle;
+    private Vehicle vehicle;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    public Customer customer;
+    private Customer customer;
 
     @Column
-    public Instant startRent;
+    private Instant startRent;
 
     @Column
-    public Instant endRent;
+    private Instant endRent;
 
+    @NotNull
     @Column
-    public String status; //todo Enum
+    private String status; //todo Enum
 }

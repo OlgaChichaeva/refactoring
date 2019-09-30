@@ -1,9 +1,10 @@
-package edu.refactor.demo.persist.entities;
+package edu.refactor.demo.entities;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -22,12 +23,14 @@ public class BillingAccount implements Serializable {
     private double money;// todo класс money
 
     @Column
-    private boolean isPrimary; // todo что значит isPrimary
+    private boolean isPrimary = false; // todo что значит isPrimary
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "billing_account_id")
     private Customer customer;
 
+    @NotNull
     @Column
     private Instant createdDate;
 }
