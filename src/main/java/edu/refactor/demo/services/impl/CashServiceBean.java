@@ -1,7 +1,9 @@
-package edu.refactor.demo.services.cashandconvertation;
+package edu.refactor.demo.services.impl;
 
-import edu.refactor.demo.persist.entities.Money;
+import edu.refactor.demo.entities.Money;
 import edu.refactor.demo.projecttypes.Currency;
+import edu.refactor.demo.services.CashService;
+import edu.refactor.demo.services.ExchangeRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

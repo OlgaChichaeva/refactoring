@@ -1,13 +1,13 @@
 package edu.refactor.demo.services;
 
-import edu.refactor.demo.persist.entities.BillingAccount;
-import edu.refactor.demo.persist.entities.Customer;
-import edu.refactor.demo.persist.entities.Vehicle;
-import edu.refactor.demo.persist.entities.VehicleRental;
-import edu.refactor.demo.persist.repository.BillingAccountDAO;
-import edu.refactor.demo.persist.repository.CustomerDAO;
-import edu.refactor.demo.persist.repository.VehicleDAO;
-import edu.refactor.demo.persist.repository.VehicleRentalDAO;
+import edu.refactor.demo.entities.BillingAccount;
+import edu.refactor.demo.entities.Customer;
+import edu.refactor.demo.entities.Vehicle;
+import edu.refactor.demo.entities.VehicleRental;
+import edu.refactor.demo.repository.BillingAccountDAO;
+import edu.refactor.demo.repository.CustomerDAO;
+import edu.refactor.demo.repository.VehicleDAO;
+import edu.refactor.demo.repository.VehicleRentalDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

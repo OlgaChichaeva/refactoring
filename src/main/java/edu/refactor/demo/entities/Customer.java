@@ -1,4 +1,4 @@
-package edu.refactor.demo.persist.entities;
+package edu.refactor.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.refactor.demo.projecttypes.CustomerCategory;

@@ -1,8 +1,8 @@
 package edu.refactor.demo.services;
 
-import edu.refactor.demo.persist.entities.BillingAccount;
-import edu.refactor.demo.persist.entities.Customer;
-import edu.refactor.demo.persist.repository.CustomerDAO;
+import edu.refactor.demo.entities.BillingAccount;
+import edu.refactor.demo.entities.Customer;
+import edu.refactor.demo.repository.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

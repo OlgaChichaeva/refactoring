@@ -1,7 +1,7 @@
 package edu.refactor.demo.schedulertasks;
 
-import edu.refactor.demo.persist.entities.VehicleRental;
-import edu.refactor.demo.persist.repository.VehicleRentalDAO;
+import edu.refactor.demo.entities.VehicleRental;
+import edu.refactor.demo.repository.VehicleRentalDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

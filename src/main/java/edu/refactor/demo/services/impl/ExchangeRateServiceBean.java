@@ -1,6 +1,7 @@
-package edu.refactor.demo.services.cashandconvertation;
+package edu.refactor.demo.services.impl;
 
 import edu.refactor.demo.projecttypes.Currency;
+import edu.refactor.demo.services.ExchangeRateService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

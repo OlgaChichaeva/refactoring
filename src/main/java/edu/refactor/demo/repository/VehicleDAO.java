@@ -1,6 +1,6 @@
-package edu.refactor.demo.persist.repository;
+package edu.refactor.demo.repository;
 
-import edu.refactor.demo.persist.entities.Vehicle;
+import edu.refactor.demo.entities.Vehicle;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

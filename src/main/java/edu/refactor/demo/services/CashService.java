@@ -1,6 +1,6 @@
-package edu.refactor.demo.services.cashandconvertation;
+package edu.refactor.demo.services;
 
-import edu.refactor.demo.persist.entities.Money;
+import edu.refactor.demo.entities.Money;
 import edu.refactor.demo.projecttypes.Currency;
 
 public interface CashService {

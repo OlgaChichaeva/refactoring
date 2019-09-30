@@ -1,4 +1,4 @@
-package edu.refactor.demo.persist.entities;
+package edu.refactor.demo.entities;
 
 import lombok.Getter;
 import lombok.Setter;
