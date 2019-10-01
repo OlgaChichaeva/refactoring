@@ -1,6 +1,8 @@
 package edu.refactor.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.refactor.demo.projecttypes.CustomerCategory;
+import edu.refactor.demo.projecttypes.CustomerStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,15 +40,19 @@ public class Customer implements Serializable {
     private Instant registration;
 
     @NotNull
-    @Column
-    private String status; //todo Enum
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VehicleRental> rentals = new ArrayList<>();
 
-    @Column
-    private String category; //todo Enum or entity
+    @NotNull
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private CustomerCategory category;
+
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)

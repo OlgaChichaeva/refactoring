@@ -1,11 +1,17 @@
 package edu.refactor.demo.controllers;
 
+import edu.refactor.demo.entities.VehicleRental;
+import edu.refactor.demo.exceptions.DuplicateObjectException;
+import edu.refactor.demo.exceptions.NotFoundException;
+import edu.refactor.demo.exceptions.NotModifiedException;
+import edu.refactor.demo.exceptions.VehicleRentalException;
 import edu.refactor.demo.services.VehicleRentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import edu.refactor.demo.entities.Vehicle;
+
+import java.util.List;
 
 
 @RequestMapping("/rental")
@@ -19,53 +25,53 @@ public class VehicleRentalController {
         this.rentalService = rentalService;
     }
 
+    @PostMapping("/create/rental")
+    public ResponseEntity createVehicleRental(@RequestBody VehicleRental rental) {
+        try {
+            rentalService.createRental(rental);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (DuplicateObjectException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/all")
-    public ResponseEntity<List<VehicleRental>> getAllVehicleRental() {
+    public ResponseEntity getAllVehicleRental() {
         try {
             List<VehicleRental> vehicles = rentalService.getAllVehicleRental();
             return new ResponseEntity<>(vehicles, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/{rental}/active")
-    public ResponseEntity<Void> activeVehicle(@RequestParam(name = "rental") Long rentalId) {
+    @PutMapping("/{rentalId}/active")
+    public ResponseEntity activeVehicle(@RequestParam(name = "rentalId") Long rentalId) {
         try {
             rentalService.activateRentalStatus(rentalId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (NotModifiedException | NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 
-    @PutMapping("/{rental}/expired")
-    public ResponseEntity<Void> expiredVehicle(@RequestParam(name = "rental") Long rentalId) {
+    @PutMapping("/{rentalId}/expired")
+    public ResponseEntity expiredVehicle(@RequestParam(name = "rentalId") Long rentalId) {
         try {
             rentalService.expairyRentalStatus(rentalId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-        }
-    }
-
-    @PostMapping("/create/rental")
-    public ResponseEntity<Void> createVehicleRental(@RequestBody VehicleRental rental) {
-        try {
-            rentalService.createRental(rental);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NotModifiedException | NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 
     @PutMapping("{rentalId}/complete/")
-    public ResponseEntity<Void> completeVehicle(@RequestParam(name = "rentalId") Long rentalId) {
+    public ResponseEntity completeVehicle(@RequestParam(name = "rentalId") Long rentalId) {
         try {
             rentalService.completeVehicle(rentalId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (VehicleRentalException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 }

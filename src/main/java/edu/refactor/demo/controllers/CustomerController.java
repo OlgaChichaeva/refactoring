@@ -1,5 +1,10 @@
 package edu.refactor.demo.controllers;
 
+import edu.refactor.demo.entities.BillingAccount;
+import edu.refactor.demo.entities.Customer;
+import edu.refactor.demo.exceptions.DuplicateObjectException;
+import edu.refactor.demo.exceptions.NotFoundException;
+import edu.refactor.demo.exceptions.NotModifiedException;
 import edu.refactor.demo.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,79 +25,77 @@ public class CustomerController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Void> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity createCustomer(@RequestBody Customer customer) {
         try {
             customerService.createCustomer(customer);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (DuplicateObjectException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Customer>> getAllCustomers() {
+    public ResponseEntity getAllCustomers() {
         try {
             List<Customer> customers = customerService.getAllCustomers();
             return new ResponseEntity<>(customers, HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/get/login/{login}/email/{email}")
-    public ResponseEntity<Customer> getCustomerBy(@PathVariable("login") String login,
-                                                  @PathVariable("email") String email) {
+    public ResponseEntity getCustomerBy(@PathVariable("login") String login,
+                                        @PathVariable("email") String email) {
         try {
             Customer customer = customerService.retrieveBy(login, email);
             return new ResponseEntity<>(customer, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/freeze/login/{login}/email/{email}")
-    public ResponseEntity<Void> freezeCustomer(@PathVariable("login") String login,
-                                               @PathVariable("email") String email) {
+    public ResponseEntity freezeCustomer(@PathVariable("login") String login,
+                                         @PathVariable("email") String email) {
         try {
             customerService.freezeCustomer(login, email);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 
     @PutMapping("/delete/login/{login}/email/{email}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable("login") String login,
-                                               @PathVariable("email") String email) {
+    public ResponseEntity deleteCustomer(@PathVariable("login") String login,
+                                         @PathVariable("email") String email) {
         try {
             customerService.deleteCustomer(login, email);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 
     @PutMapping("/active/login/{login}/email/{email}")
-    public ResponseEntity<Void> activeCustomer(@PathVariable("login") String login,
-                                               @PathVariable("email") String email) {
+    public ResponseEntity activeCustomer(@PathVariable("login") String login,
+                                         @PathVariable("email") String email) {
         try {
             customerService.activateCustomer(login, email);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (NotModifiedException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 
     @GetMapping("/{id}/billingAccount/login/{login}/email/{email}")
-    public ResponseEntity<List<BillingAccount>> getBillingAccount(@PathVariable("login") String login,
-                                                                  @PathVariable("email") String email) {
+    public ResponseEntity getBillingAccount(@PathVariable("login") String login,
+                                            @PathVariable("email") String email) {
         try {
             List<BillingAccount> billingAccounts = customerService.getBillingAccount(login, email);
             return new ResponseEntity<>(billingAccounts, HttpStatus.OK);
-        } catch (RuntimeException exception) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-
-
 }

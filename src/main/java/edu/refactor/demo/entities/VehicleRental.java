@@ -1,5 +1,6 @@
 package edu.refactor.demo.entities;
 
+import edu.refactor.demo.projecttypes.VehicleRentalStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +38,7 @@ public class VehicleRental implements Serializable {
     private Instant endRent;
 
     @NotNull
-    @Column
-    private String status; //todo Enum
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    public VehicleRentalStatus status;
 }

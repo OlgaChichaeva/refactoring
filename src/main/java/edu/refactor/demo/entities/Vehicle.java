@@ -1,6 +1,7 @@
 package edu.refactor.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.refactor.demo.projecttypes.VehicleStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,16 +29,17 @@ public class Vehicle implements Serializable {
     private String title;
 
     @NotNull
-    @Column
-    private double price; //todo Money
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRICE_ID")
+    private Money price;
 
     @NotNull
-    @Column
-    private String status; //todo Enum
-
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private VehicleStatus status;
     @NotNull
     @Column
-    private String type; //todo Enum
+    private String type;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)

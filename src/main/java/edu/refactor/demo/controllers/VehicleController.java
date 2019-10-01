@@ -1,6 +1,8 @@
 package edu.refactor.demo.controllers;
 
 import edu.refactor.demo.entities.Vehicle;
+import edu.refactor.demo.exceptions.DuplicateObjectException;
+import edu.refactor.demo.exceptions.NotFoundException;
 import edu.refactor.demo.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,33 +23,33 @@ public class VehicleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createVehicle(@RequestBody Vehicle vehicleModel) {
+    public ResponseEntity createVehicle(@RequestBody Vehicle vehicleModel) {
         try {
             vehicleService.createVehicle(vehicleModel);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (DuplicateObjectException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Vehicle>> getAllVehicle() {
+    public ResponseEntity getAllVehicle() {
         try {
             List<Vehicle> vehicles = vehicleService.getAllVehicle();
             return new ResponseEntity<>(vehicles, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/status/update/serialNumber/{serialNumber}/status/{status}")
-    public ResponseEntity<Void> updateStatus(@RequestParam(name = "serialNumber") String serialNumber,
-                                             @RequestParam(name = "status") String nextStatus) {
+    public ResponseEntity updateStatus(@RequestParam(name = "serialNumber") String serialNumber,
+                                       @RequestParam(name = "status") String nextStatus) {
         try {
             vehicleService.updateStatusByNumber(serialNumber, nextStatus);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_MODIFIED);
         }
     }
 }

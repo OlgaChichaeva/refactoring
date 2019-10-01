@@ -9,12 +9,11 @@ public interface VehicleRentalService {
 
 
     List<VehicleRental> getAllVehicleRental();
-
-    void completeVehicle(Long rentalId);
+    void createRental(VehicleRental rental);
 
     void activateRentalStatus(Long rentalId);
 
     void expairyRentalStatus(Long rentalId);
 
-    void createRental(VehicleRental rental);
+    void completeVehicle(Long rentalId);
 }
