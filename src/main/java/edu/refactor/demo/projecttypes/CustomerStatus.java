@@ -3,6 +3,7 @@ package edu.refactor.demo.projecttypes;
 import org.springframework.lang.Nullable;
 
 public enum CustomerStatus {
+    DEFAULT("DEFAULT"),
     ACTIVE("ACTIVE"),
     FREEZE("FREEZE"),
     VIP("VIP"),

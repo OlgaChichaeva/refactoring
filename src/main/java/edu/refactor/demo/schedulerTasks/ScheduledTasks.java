@@ -1,5 +1,9 @@
 package edu.refactor.demo.schedulerTasks;
 
+import edu.refactor.demo.entities.VehicleRental;
+import edu.refactor.demo.projecttypes.VehicleRentalStatus;
+import edu.refactor.demo.repository.VehicleRentalRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -7,33 +11,36 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.Instant;
 
+import static edu.refactor.demo.projecttypes.CustomerStatus.*;
+
 @Component
 public class ScheduledTasks {
-/*    private final VehicleRentalDAO vehicleRentalDao;
+    private final VehicleRentalRepo vehicleRentalRepo;
 
     @Autowired
-    public ScheduledTasks(VehicleRentalDAO vehicleRentalDao) {
-        this.vehicleRentalDao = vehicleRentalDao;
+    public ScheduledTasks(VehicleRentalRepo vehicleRentalRepo) {
+        this.vehicleRentalRepo = vehicleRentalRepo;
     }
 
     @Scheduled(fixedRate = 5000)
     public void reportCurrentTime() {
-        Iterable<VehicleRental> vrs = vehicleRentalDao.findAll();
-        for (VehicleRental vr : vrs) {
-            if (vr.status.equals("active")) {
-                Instant i = vr.startRent;
-                long j = Duration.between(i, Instant.now()).getSeconds();
-                if ("default".equals(vr.customer.status)) {
-                    if (j > 86400) {
-                        vr.status = ("expired");
+        Iterable<VehicleRental> vehicleRentals = vehicleRentalRepo.findAll();
+
+        for (VehicleRental vr : vehicleRentals) {
+            if (ACTIVE.equals(vr.getStatus())) {
+                Duration interval = Duration.between(vr.getStartRent(), Instant.now());
+                if (DEFAULT.equals(vr.getCustomer().getStatus())) {
+                    if (!interval.minusHours(24).isNegative()) {
+                        vr.setStatus(VehicleRentalStatus.EXPIRED);
                     }
-                } else if ("vip".equals(vr.customer.status)) {
-                    if (j > 259200) {
-                        vr.status = ("expired");
+                } else if (VIP.equals(vr.getCustomer().getStatus())) {
+                    if (!interval.minusHours(72).isNegative()) {
+                        vr.setStatus(VehicleRentalStatus.EXPIRED);
                     }
                 }
             }
-            vehicleRentalDao.saveAll(vrs);
+            vehicleRentalRepo.saveAll(vehicleRentals);
         }
-    }*/
+    }
+
 }

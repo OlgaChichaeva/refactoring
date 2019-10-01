@@ -92,7 +92,7 @@ public class VehicleRentalServiceBean implements VehicleRentalService {
 
             }
         } else {
-            String errorMessage = String.format("VehicleRental: id=%s not Found", rentalId);
+            String errorMessage = String.format("VehicleRental: id=%s not found", rentalId);
             log.error(errorMessage);
             throw new NotFoundException(errorMessage);
         }
